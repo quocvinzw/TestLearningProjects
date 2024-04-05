@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sendding List</title>
+</head>
+<body>
+    <p>Sendding List Objects JavaScript Into Controller .NET</p>
+    <p>Using Console To View Data</p>
+    <button id="btnSend">Sendding</button>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        /*Prepare Data*/
+        var listObjects = [];
+        var arrVegetable = ["Potato", "Tomtato", "Carrot"];
+        arrVegetable.forEach(function(entry , index){
+            var nObj = {};
+            nObj['name'] = entry;
+            nObj['amount'] = index;
+            //Passing
+            listObjects.push(nObj);
+        });
+        /*Log Data*/
+        console.log(listObjects);
+
+        /*Event Sendding*/
+        $('#btnSend').on('click',function(e){
+            e.preventDefault();
+            $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                url: '/PassingListJSTo/ReceiveList',
+                data: {'rcList' : listObjects},
+                success: function () {          
+                    console.log('SUCCESS');
+                },
+                failure: function (response) {          
+                    $('#result').html(response);
+                }
+            }); 
+        })
+    </script>
+</body>
+</html>
